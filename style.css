@@ -1,0 +1,32 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+:root{
+    --c1:#C93B76;
+    --c2:#212936;
+    --c3:#4D5562;
+    --c4:#E5E7EB;
+    --c5:#121826a6; 
+}
+body{
+    background-image: linear-gradient(30deg,var(--c1),var(--c2));
+    width: 100%;
+    height: 600px; /*adicionado apenas para o ambiente especifico que estou visualizando*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+main{
+    background-color: var(--c5);
+    display: flex;
+    padding: 20px;
+    border-radius: 20px;
+}
+img{
+    width: 288px;
+    height: 306px;
+    margin: auto;
+    border-radius: 10px;
+}
