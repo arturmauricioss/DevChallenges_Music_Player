@@ -11,13 +11,15 @@
     --c5:#121826a6; 
 }
 body{
-    background-image: linear-gradient(30deg,var(--c1),var(--c2));
+    background-image: url(./assets/gradient-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 100%;
-    min-height: 600px;/*adicionado apenas para o ambiente especifico que estou visualizando*/
-    height: 100vh; /*adicionado apenas para o ambiente especifico que estou visualizando*/
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding:140px 0px;
 }
 main{
     background-color: var(--c2);
@@ -27,8 +29,9 @@ main{
     flex-direction: column;
 }
 img{
-    width: 288px;
-    height: 306px;
+    width: 100%;
+    max-width: 288px;
+    max-height: 306px;
     margin: auto;
     border-radius: 10px;
 }
@@ -46,7 +49,6 @@ p, span{
     color: var(--c3);
 }
 p{
-    
     font-size: 12px;
     text-align: center;
     margin-top: 8px;
@@ -73,4 +75,9 @@ span{
     height: 4px;
     border-radius: 2px;
 }
-
+#controles{
+    margin-top:20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
