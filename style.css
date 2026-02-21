@@ -71,7 +71,7 @@ span{
 #barra_progresso_atual{
     margin-top: -4px;
     background-color:var(--c1);
-    width: 60%;
+    width: 0%;
     height: 4px;
     border-radius: 2px;
 }

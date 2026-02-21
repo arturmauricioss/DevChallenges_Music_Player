@@ -31,11 +31,25 @@ function formatar_tempo(tempo){
     }
     return minutos + ":" + segundos
 }
+tempo_total.innerHTML = formatar_tempo(audio.duration)   
 
 audio.addEventListener('loadedmetadata', () => {
     tempo_total.innerHTML = formatar_tempo(audio.duration)    
 })
+function tocar_proxima(){
+    if(audio.src.includes("./assets/lost-in-city-lights.mp3")){
+        audio.src="./assets/forest-lullaby.mp3";
+        audio.play();
+    }
+}
 
 audio.addEventListener('timeupdate', () => {
-    tempo_atual.innerHTML = formatar_tempo(audio.currentTime) 
-})
+    tempo_atual.innerHTML = formatar_tempo(audio.currentTime);
+    progresso_do_audio = audio.currentTime/audio.duration;
+    barra_progresso_atual.style.width = (progresso_do_audio*100)+ "%";
+
+});
+
+audio.addEventListener('ended', () => {
+    tocar_proxima();
+});
