@@ -61,6 +61,7 @@ p{
 }
 span{
     font-size: 10px;
+    margin-bottom: 1px;
 }
 #barra_progresso_total{
     background-color: var(--c4);
@@ -75,8 +76,16 @@ span{
     height: 4px;
     border-radius: 2px;
 }
+#selecionar_tempo{
+    background-color:var(--c1);
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--c4);
+    margin-top: -6px;
+    margin-left: -4px;
+}
 #controles{
-    margin-top:40px;
+    margin-top:20px;
     display: flex;
     justify-content: center;
     gap: 18px;
@@ -95,12 +104,12 @@ button img{
     filter: var(--c1);
     border-radius: 50%;
     width: 32px;
+}
 
-}
 #image_play{
-    background-color: var(--c1);
-    
+    background-color: var(--c1);    
 }
+
 button:hover{
     background-color: var(--c5);  
     border: var(--c1) 1px solid;  

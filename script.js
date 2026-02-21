@@ -8,6 +8,7 @@ let tempo_total = document.querySelector("#tempo_total")
 let barra_progresso_atual = document.querySelector("#barra_progresso_atual")
 let icone = document.querySelector("#image_play")
 let audio = document.querySelector("audio")
+let ponto_tempo = document.querySelector("#selecionar_tempo")
 
 
 function tocando(){
@@ -47,6 +48,7 @@ audio.addEventListener('timeupdate', () => {
     tempo_atual.innerHTML = formatar_tempo(audio.currentTime);
     progresso_do_audio = audio.currentTime/audio.duration;
     barra_progresso_atual.style.width = (progresso_do_audio*100)+ "%";
+    ponto_tempo.style.marginLeft = (progresso_do_audio*100-1)+ "%";
 
 });
 
