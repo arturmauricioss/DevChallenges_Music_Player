@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PLayer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
@@ -25,9 +26,8 @@
        
         <button id="selecionar_tempo"></button>
          <div id="controles">
-            <button id="musica_anterior">
+            <button id="musica_anterior" onclick="tocar_anterior_reset()">
                 <img src="./assets/prev.svg" alt="">
-                
             </button>
             <button id="play" onclick="tocando()">
                 <img id="image_play"src="./assets/play.svg" alt="">
