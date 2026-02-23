@@ -9,6 +9,7 @@ let barra_progresso_atual = document.querySelector("#barra_progresso_atual")
 let icone = document.querySelector("#image_play")
 let audio = document.querySelector("audio")
 let ponto_tempo = document.querySelector("#selecionar_tempo")
+const player = document.getElementById("player");
 
 let musicas=[
     {   
@@ -107,3 +108,12 @@ function tocar_anterior_reset(){
         audio.currentTime = 0;
     } 
 }
+
+
+player.addEventListener("click", function(event){
+    const rect = player.getBoundingClientRect();
+    const clickpos = event.clientX - rect.left;
+    const largura = rect.width;
+    let clickrange = (clickpos/largura)*audio.duration;
+    audio.currentTime = clickrange;
+});

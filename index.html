@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PLayer</title>
+    <title>Player</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,12 +19,14 @@
             <span id="tempo_atual">0:00</span>
             <span id="tempo_total">0:00</span>
         </div>
-        <div id="barra_progresso_total"></div>
-        <div id="barra_progresso_atual"></div>
-        <audio src="./assets/lost-in-city-lights.mp3">
-        </audio>  
-       
-        <button id="selecionar_tempo"></button>
+        <div id="player">
+            <div id="barra_progresso_total" class="overlay"></div>
+            <div id="barra_progresso_atual" class="overlay"></div>
+
+            <audio src="./assets/lost-in-city-lights.mp3"></audio>  
+        
+            <button id="selecionar_tempo"></button>
+        </div>
          <div id="controles">
             <button id="musica_anterior" onclick="tocar_anterior_reset()">
                 <img src="./assets/prev.svg" alt="">

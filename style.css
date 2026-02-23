@@ -100,10 +100,14 @@ button{
     display: flex;
 }
 
+
 button img{
     filter: var(--c1);
     border-radius: 50%;
     width: 32px;
+}
+.overlay {
+    pointer-events: none;
 }
 
 #image_play{
