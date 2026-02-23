@@ -109,7 +109,6 @@ function tocar_anterior_reset(){
     } 
 }
 
-
 player.addEventListener("click", function(event){
     const rect = player.getBoundingClientRect();
     const clickpos = event.clientX - rect.left;
