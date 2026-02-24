@@ -10,6 +10,8 @@ let icone = document.querySelector("#image_play")
 let audio = document.querySelector("audio")
 let ponto_tempo = document.querySelector("#selecionar_tempo")
 const player = document.getElementById("player");
+let originalWidth
+let originalHeight
 
 let musicas=[
     {   
@@ -123,6 +125,8 @@ const ctx = canvas.getContext("2d")
 
 canvas.width = canvas.offsetWidth
 canvas.height = canvas.offsetHeight
+originalWidth = canvas.offsetWidth
+originalHeight = canvas.offsetHeight
 
 function resizeCanvas() {
     if (document.documentElement.classList.contains("beat")) {
@@ -141,12 +145,15 @@ function resizeCanvas() {
 
     } else {
 
-        canvas.width = canvas.offsetWidth
-        canvas.height = canvas.offsetHeight
+    canvas.width = originalWidth
+    canvas.height = originalHeight
 
-        canvas.style.left = ""
-        canvas.style.top = ""
-        canvas.style.transform = ""
+    canvas.style.width = originalWidth + "px"
+    canvas.style.height = originalHeight + "px"
+
+    canvas.style.left = ""
+    canvas.style.top = ""
+    canvas.style.transform = ""
     }
 }
 ctx.shadowBlur = 15
