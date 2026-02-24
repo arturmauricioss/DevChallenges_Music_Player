@@ -35,6 +35,34 @@ img{
     margin: auto;
     border-radius: 10px;
 }
+
+.capa_animada {
+    position: relative;
+    width: 100%;
+    max-width: 288px;
+    max-height: 306px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.capa_animada img {
+    width: 100%;
+    max-width: 288px;
+    max-height: 306px;
+    margin: auto;
+    border-radius: 10px;
+    display: block;
+}
+
+#frequencia {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
 h1, p, span{
     font-family: "Sora", sans-serif;
 }
@@ -125,4 +153,45 @@ button:hover{
 }
 #play:hover{
     filter: drop-shadow(0px 0px 2px var(--c1));
+}
+h1,
+p,
+#tempos,
+#player,
+#controles {
+    transition: opacity 0.4s ease;
+}
+
+.beat h1,
+.beat p,
+.beat #tempos,
+.beat #player,
+.beat #controles {
+    opacity: 0;
+    pointer-events: none;
+}
+#capa {
+    transition: all 0.0s ease;
+}
+.beat main{
+    background-color: transparent;
+}
+
+.beat #capa {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.05);
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 10;
+}
+.beat #frequencia {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
 }

@@ -46,6 +46,7 @@ function play_pause(){
 }
 
 function tocando(){
+    iniciarAudioContext()
     html.classList.toggle('tocando');
     play_pause();
 }
@@ -115,4 +116,193 @@ player.addEventListener("click", function(event){
     const largura = rect.width;
     let clickrange = (clickpos/largura)*audio.duration;
     audio.currentTime = clickrange;
+});
+
+const canvas = document.getElementById("frequencia")
+const ctx = canvas.getContext("2d")
+
+canvas.width = canvas.offsetWidth
+canvas.height = canvas.offsetHeight
+
+function resizeCanvas() {
+    if (document.documentElement.classList.contains("beat")) {
+
+        const size = Math.min(window.innerWidth, window.innerHeight)
+
+        canvas.width = size
+        canvas.height = size
+
+        canvas.style.width = size + "px"
+        canvas.style.height = size + "px"
+
+        canvas.style.left = "50%"
+        canvas.style.top = "50%"
+        canvas.style.transform = "translate(-50%, -50%)"
+
+    } else {
+
+        canvas.width = canvas.offsetWidth
+        canvas.height = canvas.offsetHeight
+
+        canvas.style.left = ""
+        canvas.style.top = ""
+        canvas.style.transform = ""
+    }
+}
+ctx.shadowBlur = 15
+ctx.shadowColor = "rgba(0, 255, 221, 0.47)"
+
+let audioContext;
+let analyser;
+let bufferLength;
+let dataArray;
+
+const gradient = ctx.createRadialGradient(
+    canvas.width / 2,   // centro X
+    canvas.height,      // centro Y (base das barras)
+    0,                  // raio interno
+    canvas.width / 2,
+    canvas.height,
+    canvas.width / 1.2  // raio externo
+)
+
+function iniciarAudioContext() {
+    if (!audioContext) {
+        audioContext = new AudioContext()
+
+        const source = audioContext.createMediaElementSource(audio)
+        analyser = audioContext.createAnalyser()
+
+        source.connect(analyser)
+        analyser.connect(audioContext.destination)
+
+        analyser.fftSize = 256
+        analyser.smoothingTimeConstant = 0.85
+
+        bufferLength = analyser.frequencyBinCount
+        dataArray = new Uint8Array(bufferLength)
+
+        animate()
+    }
+
+    audioContext.resume()
+}
+
+        let rotation = 0
+        let rotationSpeed = 0
+        function animate() {
+            requestAnimationFrame(animate)
+
+            analyser.getByteFrequencyData(dataArray)
+
+            rotation %= Math.PI * 2
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+
+            // dentro do animate
+            const bass = dataArray[2] / 255
+            rotationSpeed += bass * 0.002
+            rotationSpeed *= 0.5
+            rotation += 0.002 + rotationSpeed
+            rotation %= Math.PI * 2
+            const isBeatMode = document.documentElement.classList.contains("beat")
+
+            if (!isBeatMode) {
+
+                // 🔵 MODO NORMAL (barras horizontais)
+                const centerX = canvas.width / 2
+                const totalBars = 64
+                const halfBars = totalBars / 2
+                const barWidth = (canvas.width / 2) / halfBars
+
+                const bass = dataArray[2] / 255
+                const dynamicRadius = (Math.min(canvas.width, canvas.height) / 2) + (bass * 60)
+
+                const gradient = ctx.createRadialGradient(
+                    centerX,
+                    canvas.height,
+                    0,
+                    centerX,
+                    canvas.height,
+                    dynamicRadius
+                )
+
+                gradient.addColorStop(0, "#00ffff")
+                gradient.addColorStop(0.5, "#00ff88")
+                gradient.addColorStop(1, "rgba(0,255,200,0.1)")
+
+                ctx.fillStyle = gradient
+                ctx.globalCompositeOperation = "lighter"
+
+                for (let i = 0; i < halfBars; i++) {
+
+                    const index = Math.floor(i * (bufferLength / halfBars))
+                    const normalized = dataArray[index] / 255
+                    const barHeight = normalized * canvas.height * 0.85
+
+                    const xRight = centerX + (i * barWidth)
+                    const xLeft = centerX - ((i + 1) * barWidth)
+
+                    const y = canvas.height - barHeight
+
+                    ctx.fillRect(xRight, y, barWidth - 2, barHeight)
+                    ctx.fillRect(xLeft, y, barWidth - 2, barHeight)
+                }
+
+            } else {
+        // 🔥 MODO BEAT 360° ESPELHADO
+                
+
+
+        const centerX = canvas.width / 2
+        const centerY = canvas.height / 2
+
+        const bass = dataArray[2] / 255
+        const radius = 130 + (bass * 30)
+        const totalBars = 128
+        const halfBars = totalBars / 2
+
+        for (let i = 0; i < halfBars; i++) {
+
+            const index = Math.floor(i * (bufferLength / halfBars))
+            const value = dataArray[index] / 255
+            const barHeight = value * 120
+
+            const angle = ((i / halfBars) * Math.PI) + rotation
+
+            // LADO 1
+            const x1 = centerX + Math.cos(angle) * radius
+            const y1 = centerY + Math.sin(angle) * radius
+
+            const x2 = centerX + Math.cos(angle) * (radius + barHeight)
+            const y2 = centerY + Math.sin(angle) * (radius + barHeight)
+
+            ctx.beginPath()
+            ctx.moveTo(x1, y1)
+            ctx.lineTo(x2, y2)
+            ctx.stroke()
+
+            // LADO 2 (espelho perfeito)
+            const oppositeAngle = angle + Math.PI
+
+            const ox1 = centerX + Math.cos(oppositeAngle) * radius
+            const oy1 = centerY + Math.sin(oppositeAngle) * radius
+
+            const ox2 = centerX + Math.cos(oppositeAngle) * (radius + barHeight)
+            const oy2 = centerY + Math.sin(oppositeAngle) * (radius + barHeight)
+
+            ctx.beginPath()
+            ctx.moveTo(ox1, oy1)
+            ctx.lineTo(ox2, oy2)
+            ctx.stroke()
+        }
+    }
+    ctx.globalCompositeOperation = "source-over"
+}
+
+capa.addEventListener("click", () => {
+    document.documentElement.classList.toggle("beat")
+    resizeCanvas()
+    
 });
