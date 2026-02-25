@@ -266,7 +266,7 @@ function iniciarAudioContext() {
         const centerY = canvas.height / 2
 
         const bass = dataArray[2] / 255
-        const baseRadius = Math.min(canvas.width, canvas.height) * 0.15
+        const baseRadius = Math.min(canvas.width, canvas.height) * 0.12
         
         const maxRadius = Math.min(canvas.width, canvas.height) / 2 - 20
         const radius = Math.min(baseRadius + (bass * 30), maxRadius)
