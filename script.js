@@ -260,20 +260,23 @@ function iniciarAudioContext() {
             } else {
         // 🔥 MODO BEAT 360° ESPELHADO
                 
-        capa.style.transition = "all 0.3s ease"
+    const centerX = canvas.width / 2
+    const centerY = canvas.height / 2
 
-        const centerX = canvas.width / 2
-        const centerY = canvas.height / 2
+    const capaRect = capa.getBoundingClientRect()
+    const capaRadius = capaRect.width / 2
 
-        // 🔥 pega o tamanho real da capa na tela
-        const capaRect = capa.getBoundingClientRect()
-        const capaRadius = capaRect.width / 2
+    const gap = 1
 
-        // 🎯 GAP FIXO entre imagem e barras
-        const gap = 30  // ← aqui você controla a distância
+    const bass = dataArray[2] / 255
 
-        const bass = dataArray[2] / 255
-        const radius = capaRadius + gap + (bass * 10)
+    // 🔥 limita o quanto pode crescer
+    const maxRadius = Math.min(canvas.width, canvas.height) / 2 - 40
+
+    const baseRadius = capaRadius + gap
+    const dynamicRadius = baseRadius + (bass * 10)
+
+    const radius = Math.min(dynamicRadius, maxRadius)
 
         const totalBars = 128
         const halfBars = totalBars / 2
@@ -330,7 +333,7 @@ function ajustarCapaBeat() {
         }
 
         capa.style.transform = `translate(-50%, -50%) scale(${escala})`
-        capa.style.transition = "transform 0.3s ease"
+        capa.style.transition = "transform 0.0s ease"
 
     } else {
         capa.style.transform = ""
