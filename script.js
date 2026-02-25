@@ -372,12 +372,12 @@ document.addEventListener("keydown", (event) => {
 let touchStartX = 0
 let touchStartY = 0
 
-capa.addEventListener("touchstart", (e) => {
+document.addEventListener("touchstart", (e) => {
     touchStartX = e.touches[0].clientX
     touchStartY = e.touches[0].clientY
 })
 
-capa.addEventListener("touchend", (e) => {
+document.addEventListener("touchend", (e) => {
 
     let touchEndX = e.changedTouches[0].clientX
     let touchEndY = e.changedTouches[0].clientY
@@ -385,9 +385,8 @@ capa.addEventListener("touchend", (e) => {
     let diffX = touchEndX - touchStartX
     let diffY = touchEndY - touchStartY
 
-    const threshold = 50 // distância mínima pra considerar swipe
+    const threshold = 60 // um pouco maior pra evitar erro
 
-    // 🔁 Movimento horizontal
     if (Math.abs(diffX) > Math.abs(diffY)) {
 
         if (diffX > threshold) {
@@ -397,16 +396,12 @@ capa.addEventListener("touchend", (e) => {
             tocar_anterior_reset()
         }
 
-    } 
-    // 🔁 Movimento vertical
-    else {
+    } else {
 
         if (diffY < -threshold) {
-            // Swipe pra cima
             tocando()
         } 
         else if (diffY > threshold) {
-            // Swipe pra baixo
             alternarBeat()
         }
     }
