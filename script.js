@@ -327,7 +327,7 @@ function ajustarCapaBeat() {
         let escala = 0.8
 
         if (menorLado < 600) {
-            escala = 0.6
+            escala = 0.5
         } else if (menorLado < 900) {
             escala = 0.7
         }
