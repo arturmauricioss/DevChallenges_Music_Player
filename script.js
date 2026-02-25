@@ -265,11 +265,16 @@ function iniciarAudioContext() {
         const centerX = canvas.width / 2
         const centerY = canvas.height / 2
 
+        // 🔥 pega o tamanho real da capa na tela
+        const capaRect = capa.getBoundingClientRect()
+        const capaRadius = capaRect.width / 2
+
+        // 🎯 GAP FIXO entre imagem e barras
+        const gap = 30  // ← aqui você controla a distância
+
         const bass = dataArray[2] / 255
-        const baseRadius = Math.min(canvas.width, canvas.height) * 0.12
-        
-        const maxRadius = Math.min(canvas.width, canvas.height) / 2 - 20
-        const radius = Math.min(baseRadius + (bass * 30), maxRadius)
+        const radius = capaRadius + gap + (bass * 10)
+
         const totalBars = 128
         const halfBars = totalBars / 2
 
