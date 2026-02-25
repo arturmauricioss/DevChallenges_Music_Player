@@ -131,7 +131,7 @@ originalHeight = canvas.offsetHeight
 function resizeCanvas() {
     if (document.documentElement.classList.contains("beat")) {
 
-        const size = Math.min(window.innerWidth, window.innerHeight)
+        const size = Math.min(window.innerWidth, window.innerHeight) * 0.95
 
         canvas.width = size
         canvas.height = size
@@ -260,13 +260,16 @@ function iniciarAudioContext() {
             } else {
         // 🔥 MODO BEAT 360° ESPELHADO
                 
-
+        capa.style.transition = "all 0.3s ease"
 
         const centerX = canvas.width / 2
         const centerY = canvas.height / 2
 
         const bass = dataArray[2] / 255
-        const radius = 130 + (bass * 30)
+        const baseRadius = Math.min(canvas.width, canvas.height) * 0.15
+        
+        const maxRadius = Math.min(canvas.width, canvas.height) / 2 - 20
+        const radius = Math.min(baseRadius + (bass * 30), maxRadius)
         const totalBars = 128
         const halfBars = totalBars / 2
 
@@ -308,8 +311,29 @@ function iniciarAudioContext() {
     ctx.globalCompositeOperation = "source-over"
 }
 
+function ajustarCapaBeat() {
+    if (document.documentElement.classList.contains("beat")) {
+
+        const menorLado = Math.min(window.innerWidth, window.innerHeight)
+
+        let escala = 0.8
+
+        if (menorLado < 600) {
+            escala = 0.6
+        } else if (menorLado < 900) {
+            escala = 0.7
+        }
+
+        capa.style.transform = `translate(-50%, -50%) scale(${escala})`
+        capa.style.transition = "transform 0.3s ease"
+
+    } else {
+        capa.style.transform = ""
+    }
+}
+
 capa.addEventListener("click", () => {
     document.documentElement.classList.toggle("beat")
     resizeCanvas()
-    
-});
+    ajustarCapaBeat()
+})
