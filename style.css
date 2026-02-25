@@ -21,6 +21,9 @@ body{
     align-items: center;
     padding:140px 0px;
 }
+html, body {
+    overscroll-behavior: none;
+}
 main{
     background-color: var(--c2);
     display: flex;

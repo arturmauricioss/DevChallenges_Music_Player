@@ -375,34 +375,42 @@ let touchStartY = 0
 document.addEventListener("touchstart", (e) => {
     touchStartX = e.touches[0].clientX
     touchStartY = e.touches[0].clientY
-})
+}, { passive: true })
+
 
 document.addEventListener("touchend", (e) => {
 
-    let touchEndX = e.changedTouches[0].clientX
-    let touchEndY = e.changedTouches[0].clientY
+    const touchEndX = e.changedTouches[0].clientX
+    const touchEndY = e.changedTouches[0].clientY
 
-    let diffX = touchEndX - touchStartX
-    let diffY = touchEndY - touchStartY
+    const diffX = touchEndX - touchStartX
+    const diffY = touchEndY - touchStartY
 
-    const threshold = 60 // um pouco maior pra evitar erro
+    const threshold = 70
 
+    // ignora toque simples (sem arrastar suficiente)
+    if (Math.abs(diffX) < threshold && Math.abs(diffY) < threshold) {
+        return
+    }
+
+    // movimento horizontal
     if (Math.abs(diffX) > Math.abs(diffY)) {
 
-        if (diffX > threshold) {
+        if (diffX > 0) {
             tocar_proxima()
-        } 
-        else if (diffX < -threshold) {
+        } else {
             tocar_anterior_reset()
         }
 
-    } else {
+    } 
+    // movimento vertical
+    else {
 
-        if (diffY < -threshold) {
+        if (diffY < 0) {
             tocando()
-        } 
-        else if (diffY > threshold) {
+        } else {
             alternarBeat()
         }
     }
-})
+
+}, { passive: true })
