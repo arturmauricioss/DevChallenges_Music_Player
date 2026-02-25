@@ -340,8 +340,32 @@ function ajustarCapaBeat() {
     }
 }
 
-capa.addEventListener("click", () => {
+function alternarBeat() {
     document.documentElement.classList.toggle("beat")
     resizeCanvas()
     ajustarCapaBeat()
+}
+
+capa.addEventListener("click", alternarBeat)
+
+document.addEventListener("keydown", (event) => {
+
+    switch (event.key) {
+
+        case "ArrowUp":
+            tocando()
+            break
+
+        case "ArrowRight":
+            tocar_proxima()
+            break
+
+        case "ArrowLeft":
+            tocar_anterior_reset()
+            break
+
+        case "ArrowDown":
+            alternarBeat()
+            break
+    }
 })
