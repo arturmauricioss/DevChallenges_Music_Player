@@ -53,7 +53,6 @@ function tocando(){
     play_pause();
 }
 
-
 function formatar_tempo(tempo){
 
     let minutos = Math.floor(tempo/60);
@@ -144,7 +143,6 @@ function resizeCanvas() {
         canvas.style.transform = "translate(-50%, -50%)"
 
     } else {
-
     canvas.width = originalWidth
     canvas.height = originalHeight
 
@@ -165,12 +163,12 @@ let bufferLength;
 let dataArray;
 
 const gradient = ctx.createRadialGradient(
-    canvas.width / 2,   // centro X
-    canvas.height,      // centro Y (base das barras)
-    0,                  // raio interno
     canvas.width / 2,
     canvas.height,
-    canvas.width / 1.2  // raio externo
+    0,
+    canvas.width / 2,
+    canvas.height,
+    canvas.width / 1.2
 )
 
 function iniciarAudioContext() {
@@ -206,8 +204,6 @@ function iniciarAudioContext() {
             
             ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-
-            // dentro do animate
             const bass = dataArray[2] / 255
             rotationSpeed += bass * 0.002
             rotationSpeed *= 0.5
@@ -217,7 +213,7 @@ function iniciarAudioContext() {
 
             if (!isBeatMode) {
 
-                // 🔵 MODO NORMAL (barras horizontais)
+                // MODO NORMAL (barras horizontais)
                 const centerX = canvas.width / 2
                 const totalBars = 64
                 const halfBars = totalBars / 2
@@ -258,7 +254,7 @@ function iniciarAudioContext() {
                 }
 
             } else {
-        // 🔥 MODO BEAT 360° ESPELHADO
+        // MODO BEAT 360° ESPELHADO
                 
     const centerX = canvas.width / 2
     const centerY = canvas.height / 2
@@ -270,7 +266,6 @@ function iniciarAudioContext() {
 
     const bass = dataArray[2] / 255
 
-    // 🔥 limita o quanto pode crescer
     const maxRadius = Math.min(canvas.width, canvas.height) / 2 - 40
 
     const baseRadius = capaRadius + gap
@@ -289,7 +284,6 @@ function iniciarAudioContext() {
 
             const angle = ((i / halfBars) * Math.PI) + rotation
 
-            // LADO 1
             const x1 = centerX + Math.cos(angle) * radius
             const y1 = centerY + Math.sin(angle) * radius
 
@@ -301,7 +295,6 @@ function iniciarAudioContext() {
             ctx.lineTo(x2, y2)
             ctx.stroke()
 
-            // LADO 2 (espelho perfeito)
             const oppositeAngle = angle + Math.PI
 
             const ox1 = centerX + Math.cos(oppositeAngle) * radius
@@ -377,7 +370,6 @@ document.addEventListener("touchstart", (e) => {
     touchStartY = e.touches[0].clientY
 }, { passive: true })
 
-
 document.addEventListener("touchend", (e) => {
 
     const touchEndX = e.changedTouches[0].clientX
@@ -388,12 +380,9 @@ document.addEventListener("touchend", (e) => {
 
     const threshold = 70
 
-    // ignora toque simples (sem arrastar suficiente)
     if (Math.abs(diffX) < threshold && Math.abs(diffY) < threshold) {
         return
     }
-
-    // movimento horizontal
     if (Math.abs(diffX) > Math.abs(diffY)) {
 
         if (diffX > 0) {
@@ -403,7 +392,6 @@ document.addEventListener("touchend", (e) => {
         }
 
     } 
-    // movimento vertical
     else {
 
         if (diffY < 0) {

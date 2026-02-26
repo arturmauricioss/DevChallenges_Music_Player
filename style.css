@@ -189,6 +189,7 @@ p,
     border-radius: 50%;
     object-fit: cover;
     z-index: 10;
+    
 }
 .beat #frequencia {
     position: fixed;
